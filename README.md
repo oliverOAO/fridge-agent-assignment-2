@@ -77,6 +77,30 @@ podman run --rm -e OLLAMA_HOST=http://host.containers.internal:11434 fridge-agen
 
 `demo --ollama` 只把成功主案例 `S01` 交給真實模型，其餘保留離線以重現案例。實機若回報連線錯誤，先確認端點與模型已下載。若回報工具呼叫無效，確認模型支援工具呼叫，並查閱程式輸出的 `Error` 與 `Result`。模型選擇不保證與離線排序相同，驗證以食譜 ID、時間及庫存為準。API 參考 [Ollama Chat](https://docs.ollama.com/api/chat) 與 [Tool calling](https://docs.ollama.com/capabilities/tool-calling)。
 
+### Windows 上 Podman 連線不通時
+
+若 Windows 的 Podman 指令無法連到已建立的 `podman-machine-default`，可直接從 PowerShell 指定該 WSL 環境。下例使用本機相容設定，適用於建置時顯示 `cgroup/devices` 錯誤的情況：
+
+```powershell
+function Invoke-FridgePodman { wsl.exe -d podman-machine-default -u user --cd $pwd.Path -- /usr/bin/podman @args }
+Invoke-FridgePodman build --isolation chroot -t fridge-agent:hw2 -f Containerfile .
+Invoke-FridgePodman run --cgroups=disabled --rm fridge-agent:hw2 python -m unittest discover -s tests -v
+```
+
+如果 WSL 也無法使用 `host.containers.internal` 連線至 Ollama，在 PowerShell 查詢 WSL 預設閘道，將下方 `<WSL_IP>` 換成 `default via` 後的 Windows WSL 虛擬網卡 IPv4 位址。在另一個 PowerShell 視窗啟動轉接並保持開啟。它僅綁定指定虛擬網卡的 11435 埠，將模型查詢與對話轉交給 Windows 的本機 Ollama。
+
+```powershell
+wsl.exe -d podman-machine-default -u user -- ip -4 route show default
+python -X utf8 scripts/ollama_wsl_relay.py <WSL_IP>
+```
+
+在原視窗使用以下方式啟動網頁。以下採用已實機驗證的 `qwen3:1.7b`，先以 `ollama pull qwen3:1.7b` 下載。已有 8B 模型的環境可把 `OLLAMA_MODEL` 改為 `qwen3:8b`。同名網頁容器若仍在執行，請先停止它。具名 volume 會保留資料。
+
+```powershell
+Invoke-FridgePodman run --cgroups=disabled -d --name fridge-agent-hw2 -p 127.0.0.1:8501:8501 -v fridge-data:/app/data -e OLLAMA_HOST=http://<WSL_IP>:11435 -e OLLAMA_MODEL=qwen3:1.7b fridge-agent:hw2
+Invoke-FridgePodman exec fridge-agent-hw2 python -m fridge.demo --ollama
+```
+
 ### 直接在本機開網頁
 
 此方式便於開發。課程的部署驗證使用前述 Podman 指令。
@@ -93,4 +117,6 @@ python -m streamlit run app.py --server.address=127.0.0.1 --browser.gatherUsageS
 - `tests/` 包含 6 項自動測試。`docs/` 包含工具定義、作業說明與測試證據。
 - 本版接受 1～2 人、單餐、最多兩道菜。採用固定目錄、手動登錄及明確的菜單確認。菜單時間為順序料理的估計值。
 - 採買清單、兩道菜總量驗證及確認扣庫存在本版可用。作業 3 可針對模型選到缺料菜單時加入自動重選，與目前的一次選擇流程比較。
-- 2026 年 11 月 22 日已在 Windows／Python 3.12.2 實跑命令列、5 個展示案例、6 項自動測試。Ollama 的工具回應在單元測試以替身驗證，實際模型、Streamlit 網頁及 Podman 建置仍待有相應程式及下載權限的環境驗證。
+- 2026 年 11 月 22 日已在 Windows／Python 3.12.2 實跑命令列和 [Streamlit 操作測試](docs/evidence/streamlit-run.json)。
+- [Podman 5.8.10 執行紀錄](docs/evidence/podman-run.json)確認映像建置成功、6 項測試和 5 個離線展示案例通過，且 Windows 本機瀏覽器端點的健康檢查為 `ok`。
+- [容器內的 Ollama 執行紀錄](docs/evidence/ollama-podman-run.json)使用 Windows 上的 Ollama 0.40.16 與 `qwen3:1.7b`，成功完成 S01 工具呼叫，產出豆腐炒蛋、蒜炒高麗菜及 18 分鐘的預估時間。因本機可用記憶體有限，實機驗證使用這個輕量版本。8B 是程式預設選項，沒有列入此次驗收結果。

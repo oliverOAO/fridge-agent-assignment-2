@@ -1,0 +1,11 @@
+{
+  "engine": "podman version 5.8.10",
+  "image": "fridge-agent:hw2",
+  "container": "fridge-agent-hw2",
+  "app_health": "ok",
+  "unit_tests_passed": 6,
+  "demo_cases_passed": 5,
+  "windows_client": false,
+  "build_isolation": "chroot",
+  "run_cgroups": "disabled"
+}

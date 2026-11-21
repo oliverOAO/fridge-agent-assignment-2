@@ -1,0 +1,2058 @@
+[
+  {
+    "case": "S01",
+    "expected": "ready",
+    "observed": {
+      "status": "ready",
+      "mode": "Ollama qwen3:1.7b",
+      "message": "菜單符合條件。料理完成後可確認扣除列出的用量。",
+      "meal_id": "0bf3949682914321be546b715c7e8f80",
+      "recipes": [
+        {
+          "id": "R01",
+          "name": "豆腐炒蛋",
+          "minutes": 10,
+          "items": [
+            [
+              "雞蛋",
+              1,
+              "顆"
+            ],
+            [
+              "板豆腐",
+              100,
+              "公克"
+            ],
+            [
+              "食用油",
+              5,
+              "毫升"
+            ],
+            [
+              "鹽",
+              1,
+              "公克"
+            ]
+          ],
+          "steps": [
+            "豆腐切小丁，雞蛋打散加鹽。",
+            "下油煎豆腐，再加入蛋液翻炒至凝固。"
+          ]
+        },
+        {
+          "id": "R02",
+          "name": "蒜炒高麗菜",
+          "minutes": 8,
+          "items": [
+            [
+              "高麗菜",
+              120,
+              "公克"
+            ],
+            [
+              "蒜頭",
+              5,
+              "公克"
+            ],
+            [
+              "食用油",
+              5,
+              "毫升"
+            ],
+            [
+              "鹽",
+              1,
+              "公克"
+            ]
+          ],
+          "steps": [
+            "高麗菜洗淨切塊，蒜頭切碎。",
+            "用油炒香蒜末，下菜炒至軟熟，加鹽調味。"
+          ]
+        }
+      ],
+      "recipe_ids": [
+        "R01",
+        "R02"
+      ],
+      "servings": 2,
+      "minutes": 18,
+      "required": [
+        {
+          "name": "板豆腐",
+          "quantity": 200,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 10,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 2,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 20,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 240,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 4,
+          "unit": "公克"
+        }
+      ],
+      "missing": [],
+      "trace": [
+        {
+          "stage": "User Input",
+          "elapsed_ms": 0,
+          "mode": "Ollama qwen3:1.7b",
+          "request": {
+            "servings": 2,
+            "minutes": 20,
+            "dishes": 2,
+            "excluded": [],
+            "priority": [
+              "板豆腐"
+            ],
+            "shopping": false,
+            "preference": ""
+          }
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 0,
+          "summary": "先取得目前庫存，再依排除食材與時間找食譜。"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "arguments": {}
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "revision": 6,
+          "items": [
+            {
+              "name": "板豆腐",
+              "quantity": 300,
+              "unit": "公克"
+            },
+            {
+              "name": "蒜頭",
+              "quantity": 20,
+              "unit": "公克"
+            },
+            {
+              "name": "雞蛋",
+              "quantity": 4,
+              "unit": "顆"
+            },
+            {
+              "name": "食用油",
+              "quantity": 30,
+              "unit": "毫升"
+            },
+            {
+              "name": "高麗菜",
+              "quantity": 400,
+              "unit": "公克"
+            },
+            {
+              "name": "鹽",
+              "quantity": 10,
+              "unit": "公克"
+            }
+          ]
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "search_recipes",
+          "arguments": {
+            "excluded": [],
+            "minutes": 20
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 1,
+          "tool": "search_recipes",
+          "recipe_count": 29,
+          "options": [
+            {
+              "recipe_ids": [
+                "R01",
+                "R02"
+              ],
+              "names": [
+                "豆腐炒蛋",
+                "蒜炒高麗菜"
+              ],
+              "missing": [],
+              "minutes": 18,
+              "uses_priority": [
+                "板豆腐"
+              ]
+            },
+            {
+              "recipe_ids": [
+                "R01",
+                "R12"
+              ],
+              "names": [
+                "豆腐炒蛋",
+                "蒜炒菠菜"
+              ],
+              "missing": [
+                {
+                  "name": "菠菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": [
+                "板豆腐"
+              ]
+            },
+            {
+              "recipe_ids": [
+                "R01",
+                "R11"
+              ],
+              "names": [
+                "豆腐炒蛋",
+                "蒜炒青花菜"
+              ],
+              "missing": [
+                {
+                  "name": "青花菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 20,
+              "uses_priority": [
+                "板豆腐"
+              ]
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R04"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "香煎豆腐"
+              ],
+              "missing": [
+                {
+                  "name": "醬油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                }
+              ],
+              "minutes": 20,
+              "uses_priority": [
+                "板豆腐"
+              ]
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R12"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "蒜炒菠菜"
+              ],
+              "missing": [
+                {
+                  "name": "菠菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 16,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R21"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "玉米炒蛋"
+              ],
+              "missing": [
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 150,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 17,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R11"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "蒜炒青花菜"
+              ],
+              "missing": [
+                {
+                  "name": "青花菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R05"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "洋蔥炒蛋"
+              ],
+              "missing": [
+                {
+                  "name": "洋蔥",
+                  "quantity": 160,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 19,
+              "uses_priority": []
+            }
+          ]
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 1,
+          "summary": "選一組候選菜單，交由工具加總並檢查。",
+          "mode": "Ollama qwen3:1.7b"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 733,
+          "tool": "validate_meal",
+          "arguments": {
+            "recipe_ids": [
+              "R01",
+              "R02"
+            ],
+            "servings": 2
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 733,
+          "tool": "validate_meal",
+          "minutes": 18,
+          "required": [
+            {
+              "name": "板豆腐",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "蒜頭",
+              "quantity": 10,
+              "unit": "公克"
+            },
+            {
+              "name": "雞蛋",
+              "quantity": 2,
+              "unit": "顆"
+            },
+            {
+              "name": "食用油",
+              "quantity": 20,
+              "unit": "毫升"
+            },
+            {
+              "name": "高麗菜",
+              "quantity": 240,
+              "unit": "公克"
+            },
+            {
+              "name": "鹽",
+              "quantity": 4,
+              "unit": "公克"
+            }
+          ],
+          "missing": []
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 733,
+          "summary": "通過檢查，保存待確認菜單，維持庫存原值。"
+        },
+        {
+          "stage": "Result",
+          "elapsed_ms": 833,
+          "status": "ready",
+          "message": "菜單符合條件。料理完成後可確認扣除列出的用量。",
+          "meal_id": "0bf3949682914321be546b715c7e8f80",
+          "recipe_ids": [
+            "R01",
+            "R02"
+          ],
+          "servings": 2,
+          "minutes": 18,
+          "required": [
+            {
+              "name": "板豆腐",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "蒜頭",
+              "quantity": 10,
+              "unit": "公克"
+            },
+            {
+              "name": "雞蛋",
+              "quantity": 2,
+              "unit": "顆"
+            },
+            {
+              "name": "食用油",
+              "quantity": 20,
+              "unit": "毫升"
+            },
+            {
+              "name": "高麗菜",
+              "quantity": 240,
+              "unit": "公克"
+            },
+            {
+              "name": "鹽",
+              "quantity": 4,
+              "unit": "公克"
+            }
+          ],
+          "missing": []
+        }
+      ]
+    },
+    "inventory_before": {
+      "revision": 6,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 300,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 20,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 4,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 30,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 400,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 10,
+          "unit": "公克"
+        }
+      ]
+    },
+    "inventory_after_plan": {
+      "revision": 6,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 300,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 20,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 4,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 30,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 400,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 10,
+          "unit": "公克"
+        }
+      ]
+    },
+    "pass": true,
+    "confirmation": {
+      "status": "confirmed",
+      "deducted": [
+        {
+          "name": "板豆腐",
+          "quantity": 200,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 10,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 2,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 20,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 240,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 4,
+          "unit": "公克"
+        }
+      ]
+    },
+    "inventory_after_confirm": {
+      "revision": 7,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 100,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 10,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 2,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 10,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 160,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 6,
+          "unit": "公克"
+        }
+      ]
+    },
+    "second_confirmation": {
+      "status": "already_confirmed",
+      "deducted": [
+        {
+          "name": "板豆腐",
+          "quantity": 200,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 10,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 2,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 20,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 240,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 4,
+          "unit": "公克"
+        }
+      ]
+    }
+  },
+  {
+    "case": "F01",
+    "expected": "no_candidates",
+    "observed": {
+      "status": "no_candidates",
+      "mode": "離線規則",
+      "message": "找不到符合條件的菜單。請增加時間、減少道數或調整排除項目。",
+      "trace": [
+        {
+          "stage": "User Input",
+          "elapsed_ms": 0,
+          "mode": "離線規則",
+          "request": {
+            "servings": 2,
+            "minutes": 3,
+            "dishes": 2,
+            "excluded": [],
+            "priority": [],
+            "shopping": false,
+            "preference": ""
+          }
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 0,
+          "summary": "先取得目前庫存，再依排除食材與時間找食譜。"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "arguments": {}
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "revision": 6,
+          "items": [
+            {
+              "name": "板豆腐",
+              "quantity": 300,
+              "unit": "公克"
+            },
+            {
+              "name": "蒜頭",
+              "quantity": 20,
+              "unit": "公克"
+            },
+            {
+              "name": "雞蛋",
+              "quantity": 4,
+              "unit": "顆"
+            },
+            {
+              "name": "食用油",
+              "quantity": 30,
+              "unit": "毫升"
+            },
+            {
+              "name": "高麗菜",
+              "quantity": 400,
+              "unit": "公克"
+            },
+            {
+              "name": "鹽",
+              "quantity": 10,
+              "unit": "公克"
+            }
+          ]
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "search_recipes",
+          "arguments": {
+            "excluded": [],
+            "minutes": 3
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 0,
+          "tool": "search_recipes",
+          "recipe_count": 0,
+          "options": []
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 0,
+          "summary": "時間或排除限制下湊不出指定道數。"
+        },
+        {
+          "stage": "Result",
+          "elapsed_ms": 0,
+          "status": "no_candidates",
+          "message": "找不到符合條件的菜單。請增加時間、減少道數或調整排除項目。"
+        }
+      ]
+    },
+    "inventory_before": {
+      "revision": 6,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 300,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 20,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 4,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 30,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 400,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 10,
+          "unit": "公克"
+        }
+      ]
+    },
+    "inventory_after_plan": {
+      "revision": 6,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 300,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 20,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 4,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 30,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 400,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 10,
+          "unit": "公克"
+        }
+      ]
+    },
+    "pass": true
+  },
+  {
+    "case": "F02",
+    "expected": "insufficient_stock",
+    "observed": {
+      "status": "insufficient_stock",
+      "mode": "離線規則",
+      "message": "所選菜單庫存不足。可補登庫存、改選條件，或允許採買。",
+      "missing": [
+        {
+          "name": "小黃瓜",
+          "quantity": 440,
+          "unit": "公克"
+        },
+        {
+          "name": "番茄",
+          "quantity": 200,
+          "unit": "公克"
+        },
+        {
+          "name": "醬油",
+          "quantity": 10,
+          "unit": "毫升"
+        },
+        {
+          "name": "香油",
+          "quantity": 12,
+          "unit": "毫升"
+        },
+        {
+          "name": "鹽",
+          "quantity": 2,
+          "unit": "公克"
+        }
+      ],
+      "trace": [
+        {
+          "stage": "User Input",
+          "elapsed_ms": 0,
+          "mode": "離線規則",
+          "request": {
+            "servings": 2,
+            "minutes": 20,
+            "dishes": 2,
+            "excluded": [],
+            "priority": [],
+            "shopping": false,
+            "preference": ""
+          }
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 0,
+          "summary": "先取得目前庫存，再依排除食材與時間找食譜。"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "arguments": {}
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "revision": 0,
+          "items": []
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "search_recipes",
+          "arguments": {
+            "excluded": [],
+            "minutes": 20
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 2,
+          "tool": "search_recipes",
+          "recipe_count": 29,
+          "options": [
+            {
+              "recipe_ids": [
+                "R13",
+                "R30"
+              ],
+              "names": [
+                "芝麻小黃瓜",
+                "番茄小黃瓜拌菜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 440,
+                  "unit": "公克"
+                },
+                {
+                  "name": "番茄",
+                  "quantity": 200,
+                  "unit": "公克"
+                },
+                {
+                  "name": "醬油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 12,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 2,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 15,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R23",
+                "R30"
+              ],
+              "names": [
+                "玉米小黃瓜拌菜",
+                "番茄小黃瓜拌菜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 400,
+                  "unit": "公克"
+                },
+                {
+                  "name": "番茄",
+                  "quantity": 200,
+                  "unit": "公克"
+                },
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 140,
+                  "unit": "公克"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 12,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 15,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R12"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "蒜炒菠菜"
+              ],
+              "missing": [
+                {
+                  "name": "菠菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "蒜頭",
+                  "quantity": 20,
+                  "unit": "公克"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "高麗菜",
+                  "quantity": 240,
+                  "unit": "公克"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 16,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R13",
+                "R23"
+              ],
+              "names": [
+                "芝麻小黃瓜",
+                "玉米小黃瓜拌菜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 440,
+                  "unit": "公克"
+                },
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 140,
+                  "unit": "公克"
+                },
+                {
+                  "name": "醬油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 12,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 2,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 16,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R11"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "蒜炒青花菜"
+              ],
+              "missing": [
+                {
+                  "name": "蒜頭",
+                  "quantity": 20,
+                  "unit": "公克"
+                },
+                {
+                  "name": "青花菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "高麗菜",
+                  "quantity": 240,
+                  "unit": "公克"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R07",
+                "R13"
+              ],
+              "names": [
+                "醬油杏鮑菇",
+                "芝麻小黃瓜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 240,
+                  "unit": "公克"
+                },
+                {
+                  "name": "杏鮑菇",
+                  "quantity": 280,
+                  "unit": "公克"
+                },
+                {
+                  "name": "醬油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 6,
+                  "unit": "毫升"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R11",
+                "R12"
+              ],
+              "names": [
+                "蒜炒青花菜",
+                "蒜炒菠菜"
+              ],
+              "missing": [
+                {
+                  "name": "菠菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "蒜頭",
+                  "quantity": 20,
+                  "unit": "公克"
+                },
+                {
+                  "name": "青花菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R01",
+                "R21"
+              ],
+              "names": [
+                "豆腐炒蛋",
+                "玉米炒蛋"
+              ],
+              "missing": [
+                {
+                  "name": "板豆腐",
+                  "quantity": 200,
+                  "unit": "公克"
+                },
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 150,
+                  "unit": "公克"
+                },
+                {
+                  "name": "雞蛋",
+                  "quantity": 6,
+                  "unit": "顆"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 19,
+              "uses_priority": []
+            }
+          ]
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 2,
+          "summary": "選一組候選菜單，交由工具加總並檢查。",
+          "mode": "離線規則"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 2,
+          "tool": "validate_meal",
+          "arguments": {
+            "recipe_ids": [
+              "R13",
+              "R30"
+            ],
+            "servings": 2
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 2,
+          "tool": "validate_meal",
+          "minutes": 15,
+          "required": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ],
+          "missing": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ]
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 2,
+          "summary": "所選菜單缺料且禁止採買，停止規劃。"
+        },
+        {
+          "stage": "Result",
+          "elapsed_ms": 2,
+          "status": "insufficient_stock",
+          "message": "所選菜單庫存不足。可補登庫存、改選條件，或允許採買。",
+          "missing": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ]
+        }
+      ]
+    },
+    "inventory_before": {
+      "revision": 0,
+      "items": []
+    },
+    "inventory_after_plan": {
+      "revision": 0,
+      "items": []
+    },
+    "pass": true
+  },
+  {
+    "case": "S02",
+    "expected": "shopping_needed",
+    "observed": {
+      "status": "shopping_needed",
+      "mode": "離線規則",
+      "message": "需補足下列食材才可完成此菜單。",
+      "recipes": [
+        {
+          "id": "R13",
+          "name": "芝麻小黃瓜",
+          "minutes": 8,
+          "items": [
+            [
+              "小黃瓜",
+              120,
+              "公克"
+            ],
+            [
+              "香油",
+              3,
+              "毫升"
+            ],
+            [
+              "醬油",
+              5,
+              "毫升"
+            ]
+          ],
+          "steps": [
+            "小黃瓜洗淨後拍裂，切小段。",
+            "加入香油與醬油拌勻。"
+          ]
+        },
+        {
+          "id": "R30",
+          "name": "番茄小黃瓜拌菜",
+          "minutes": 7,
+          "items": [
+            [
+              "番茄",
+              100,
+              "公克"
+            ],
+            [
+              "小黃瓜",
+              100,
+              "公克"
+            ],
+            [
+              "香油",
+              3,
+              "毫升"
+            ],
+            [
+              "鹽",
+              1,
+              "公克"
+            ]
+          ],
+          "steps": [
+            "洗淨番茄與小黃瓜，切成小塊。",
+            "加鹽和香油拌勻後盛盤。"
+          ]
+        }
+      ],
+      "recipe_ids": [
+        "R13",
+        "R30"
+      ],
+      "servings": 2,
+      "minutes": 15,
+      "required": [
+        {
+          "name": "小黃瓜",
+          "quantity": 440,
+          "unit": "公克"
+        },
+        {
+          "name": "番茄",
+          "quantity": 200,
+          "unit": "公克"
+        },
+        {
+          "name": "醬油",
+          "quantity": 10,
+          "unit": "毫升"
+        },
+        {
+          "name": "香油",
+          "quantity": 12,
+          "unit": "毫升"
+        },
+        {
+          "name": "鹽",
+          "quantity": 2,
+          "unit": "公克"
+        }
+      ],
+      "missing": [
+        {
+          "name": "小黃瓜",
+          "quantity": 440,
+          "unit": "公克"
+        },
+        {
+          "name": "番茄",
+          "quantity": 200,
+          "unit": "公克"
+        },
+        {
+          "name": "醬油",
+          "quantity": 10,
+          "unit": "毫升"
+        },
+        {
+          "name": "香油",
+          "quantity": 12,
+          "unit": "毫升"
+        },
+        {
+          "name": "鹽",
+          "quantity": 2,
+          "unit": "公克"
+        }
+      ],
+      "trace": [
+        {
+          "stage": "User Input",
+          "elapsed_ms": 0,
+          "mode": "離線規則",
+          "request": {
+            "servings": 2,
+            "minutes": 20,
+            "dishes": 2,
+            "excluded": [],
+            "priority": [],
+            "shopping": true,
+            "preference": ""
+          }
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 0,
+          "summary": "先取得目前庫存，再依排除食材與時間找食譜。"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "arguments": {}
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 0,
+          "tool": "inventory_snapshot",
+          "revision": 0,
+          "items": []
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 0,
+          "tool": "search_recipes",
+          "arguments": {
+            "excluded": [],
+            "minutes": 20
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 1,
+          "tool": "search_recipes",
+          "recipe_count": 29,
+          "options": [
+            {
+              "recipe_ids": [
+                "R13",
+                "R30"
+              ],
+              "names": [
+                "芝麻小黃瓜",
+                "番茄小黃瓜拌菜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 440,
+                  "unit": "公克"
+                },
+                {
+                  "name": "番茄",
+                  "quantity": 200,
+                  "unit": "公克"
+                },
+                {
+                  "name": "醬油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 12,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 2,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 15,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R23",
+                "R30"
+              ],
+              "names": [
+                "玉米小黃瓜拌菜",
+                "番茄小黃瓜拌菜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 400,
+                  "unit": "公克"
+                },
+                {
+                  "name": "番茄",
+                  "quantity": 200,
+                  "unit": "公克"
+                },
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 140,
+                  "unit": "公克"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 12,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 15,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R12"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "蒜炒菠菜"
+              ],
+              "missing": [
+                {
+                  "name": "菠菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "蒜頭",
+                  "quantity": 20,
+                  "unit": "公克"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "高麗菜",
+                  "quantity": 240,
+                  "unit": "公克"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 16,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R13",
+                "R23"
+              ],
+              "names": [
+                "芝麻小黃瓜",
+                "玉米小黃瓜拌菜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 440,
+                  "unit": "公克"
+                },
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 140,
+                  "unit": "公克"
+                },
+                {
+                  "name": "醬油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 12,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 2,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 16,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R02",
+                "R11"
+              ],
+              "names": [
+                "蒜炒高麗菜",
+                "蒜炒青花菜"
+              ],
+              "missing": [
+                {
+                  "name": "蒜頭",
+                  "quantity": 20,
+                  "unit": "公克"
+                },
+                {
+                  "name": "青花菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "高麗菜",
+                  "quantity": 240,
+                  "unit": "公克"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R07",
+                "R13"
+              ],
+              "names": [
+                "醬油杏鮑菇",
+                "芝麻小黃瓜"
+              ],
+              "missing": [
+                {
+                  "name": "小黃瓜",
+                  "quantity": 240,
+                  "unit": "公克"
+                },
+                {
+                  "name": "杏鮑菇",
+                  "quantity": 280,
+                  "unit": "公克"
+                },
+                {
+                  "name": "醬油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 10,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "香油",
+                  "quantity": 6,
+                  "unit": "毫升"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R11",
+                "R12"
+              ],
+              "names": [
+                "蒜炒青花菜",
+                "蒜炒菠菜"
+              ],
+              "missing": [
+                {
+                  "name": "菠菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "蒜頭",
+                  "quantity": 20,
+                  "unit": "公克"
+                },
+                {
+                  "name": "青花菜",
+                  "quantity": 300,
+                  "unit": "公克"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 18,
+              "uses_priority": []
+            },
+            {
+              "recipe_ids": [
+                "R01",
+                "R21"
+              ],
+              "names": [
+                "豆腐炒蛋",
+                "玉米炒蛋"
+              ],
+              "missing": [
+                {
+                  "name": "板豆腐",
+                  "quantity": 200,
+                  "unit": "公克"
+                },
+                {
+                  "name": "罐裝玉米粒",
+                  "quantity": 150,
+                  "unit": "公克"
+                },
+                {
+                  "name": "雞蛋",
+                  "quantity": 6,
+                  "unit": "顆"
+                },
+                {
+                  "name": "食用油",
+                  "quantity": 20,
+                  "unit": "毫升"
+                },
+                {
+                  "name": "鹽",
+                  "quantity": 4,
+                  "unit": "公克"
+                }
+              ],
+              "minutes": 19,
+              "uses_priority": []
+            }
+          ]
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 1,
+          "summary": "選一組候選菜單，交由工具加總並檢查。",
+          "mode": "離線規則"
+        },
+        {
+          "stage": "Tool Call",
+          "elapsed_ms": 1,
+          "tool": "validate_meal",
+          "arguments": {
+            "recipe_ids": [
+              "R13",
+              "R30"
+            ],
+            "servings": 2
+          }
+        },
+        {
+          "stage": "Observation",
+          "elapsed_ms": 1,
+          "tool": "validate_meal",
+          "minutes": 15,
+          "required": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ],
+          "missing": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ]
+        },
+        {
+          "stage": "Decision",
+          "elapsed_ms": 1,
+          "summary": "允許採買，提供缺料清單；補登後可重新規劃。"
+        },
+        {
+          "stage": "Result",
+          "elapsed_ms": 1,
+          "status": "shopping_needed",
+          "message": "需補足下列食材才可完成此菜單。",
+          "recipe_ids": [
+            "R13",
+            "R30"
+          ],
+          "servings": 2,
+          "minutes": 15,
+          "required": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ],
+          "missing": [
+            {
+              "name": "小黃瓜",
+              "quantity": 440,
+              "unit": "公克"
+            },
+            {
+              "name": "番茄",
+              "quantity": 200,
+              "unit": "公克"
+            },
+            {
+              "name": "醬油",
+              "quantity": 10,
+              "unit": "毫升"
+            },
+            {
+              "name": "香油",
+              "quantity": 12,
+              "unit": "毫升"
+            },
+            {
+              "name": "鹽",
+              "quantity": 2,
+              "unit": "公克"
+            }
+          ]
+        }
+      ]
+    },
+    "inventory_before": {
+      "revision": 0,
+      "items": []
+    },
+    "inventory_after_plan": {
+      "revision": 0,
+      "items": []
+    },
+    "pass": true
+  },
+  {
+    "case": "F03",
+    "expected": "阻止扣除並保留修改後庫存",
+    "observed": "規劃後庫存已變更。請重新規劃，再確認扣除。",
+    "inventory_before_confirm": {
+      "revision": 7,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 300,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 20,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 1,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 30,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 400,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 10,
+          "unit": "公克"
+        }
+      ]
+    },
+    "inventory_after_confirm": {
+      "revision": 7,
+      "items": [
+        {
+          "name": "板豆腐",
+          "quantity": 300,
+          "unit": "公克"
+        },
+        {
+          "name": "蒜頭",
+          "quantity": 20,
+          "unit": "公克"
+        },
+        {
+          "name": "雞蛋",
+          "quantity": 1,
+          "unit": "顆"
+        },
+        {
+          "name": "食用油",
+          "quantity": 30,
+          "unit": "毫升"
+        },
+        {
+          "name": "高麗菜",
+          "quantity": 400,
+          "unit": "公克"
+        },
+        {
+          "name": "鹽",
+          "quantity": 10,
+          "unit": "公克"
+        }
+      ]
+    },
+    "pass": true
+  }
+]
