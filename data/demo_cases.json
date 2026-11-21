@@ -1,0 +1,9 @@
+{
+  "stock": {"雞蛋": 4, "板豆腐": 300, "高麗菜": 400, "蒜頭": 20, "食用油": 30, "鹽": 10},
+  "cases": [
+    {"id": "S01", "request": {"servings": 2, "dishes": 2, "minutes": 20, "priority": ["板豆腐"]}, "expected": "ready"},
+    {"id": "F01", "request": {"servings": 2, "dishes": 2, "minutes": 3}, "expected": "no_candidates"},
+    {"id": "F02", "request": {"servings": 2, "dishes": 2, "minutes": 20}, "stock": {}, "expected": "insufficient_stock"},
+    {"id": "S02", "request": {"servings": 2, "dishes": 2, "minutes": 20, "shopping": true}, "stock": {}, "expected": "shopping_needed"}
+  ]
+}
